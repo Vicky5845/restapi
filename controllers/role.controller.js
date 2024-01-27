@@ -22,7 +22,7 @@ export const updateRole = async(req,res)=>{
             return res.send("Role update")
         }
     } catch (error) {
-        return res.send("ISE")
+        return res.send("ISE");
     }
 }
 
