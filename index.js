@@ -11,6 +11,9 @@ const app = express();
 app.use(express.json());
 app.use('/api/role',roleRoute)
 app.use('/api/auth',authRoute)
+app.use('/',(req,res)=>{
+    return res.send("hello")
+})
 
 const connectDB = async()=>{
     try {
@@ -23,5 +26,6 @@ const connectDB = async()=>{
 
 app.listen(process.env.port,()=>{
     connectDB()
+  
     console.log("Connected to Server ");
 })
