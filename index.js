@@ -11,9 +11,7 @@ const app = express();
 app.use(express.json());
 app.use('/api/role',roleRoute)
 app.use('/api/auth',authRoute)
-app.use('/',(req,res)=>{
-    return res.send("hello")
-})
+
 
 const connectDB = async()=>{
     try {
