@@ -1,51 +1,53 @@
-import Role from "../model/Role.js";
+import Role from "../models/Role.js";
+import { CreateSucess } from "../utilis/sucess.js";
+import { CreateError } from "../utilis/error.js";
 
-export const createRole = async(req,res)=>{
+export const createRole = async(req,res,next)=>{
     try {
-        const {role,age}=req.body
-        const newRole = await Role({role:role,age:age});
+        const {role,age}=req.body;
+        const newRole = new Role({role:role,age:age})
         await newRole.save();
-        return res.json("Role ok ")
+        return next(CreateSucess(200,"ROLE Created"))
     } catch (error) {
-        return res.send("Role not  ok ")
+        return next(CreateError(400,"ROLE not Created"))
     }
 }
 
-export const updateRole = async(req,res)=>{
+export const updateRole = async(req,res,next)=>{
     try {
         const updateID = req.params.id;
         const roleUpdate = await Role.findById({_id:updateID})
         if (roleUpdate) {
-            const newData  = await Role.findByIdAndUpdate(updateID,{$set:req.body},{new:true});
-            return res.send("Role update")
+            const newData = await Role.findByIdAndUpdate(updateID,{$set:req.body},{new:true});
+            return next(CreateSucess(200,"ROLE Updated"))
         } else {
-            return res.send("Role update")
+            return next(CreateError(400,"ROLE not Updated"))
         }
     } catch (error) {
-        return res.send("ISE");
+        return next(CreateError(500,"ISE"))
     }
 }
 
-export const deleteRole = async(req,res)=>{
+export const deleteRole = async(req,res,next)=>{
     try {
         const deleteID = req.params.id;
-        const roledelete = await Role.findById({_id:deleteID})
-        if (roledelete) {
-            const newData  = await Role.findByIdAndDelete(deleteID,{$set:req.body},{new:true});
-            return res.send("Role DEL")
+        const roleDelete = await Role.findById({_id:deleteID})
+        if (roleDelete) {
+            const newData = await Role.findByIdAndDelete(deleteID,{$set:req.body},{new:true});
+            return next(CreateSucess(200,"ROLE delete"))
         } else {
-            return res.send("Role not Del")
+            return next(CreateError(400,"ROLE not delete"))
         }
     } catch (error) {
-        return res.send("ISE")
+        return next(CreateError(500,"ISE"))
     }
 }
 
-export const getAll  = async(req,res)=>{
+export const getAll = async(req,res,next)=>{
     try {
         const allRole = await Role.find({});
-        return res.json(allRole)
+        return res.send(allRole)
     } catch (error) {
-        return res.send("ISE")
+        return next(CreateError(500,"ISE"))
     }
 }

@@ -3,9 +3,9 @@ import { createRole, deleteRole, getAll, updateRole } from '../controllers/role.
 
 const router = express.Router();
 
-router.post('/create',createRole)
-router.put('/update/:id',updateRole)
-router.delete('/delete/:id',deleteRole)
-router.get('/all',getAll)
+router.post('/create',createRole);
+router.put('/update/:id',updateRole);
+router.delete('/delete/:id',deleteRole);
+router.get('/all',getAll);
 
 export default router;
