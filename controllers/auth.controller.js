@@ -27,10 +27,11 @@ export const login = async(req,res,next)=>{
     try {
         const {email,password}=req.body
       const user = await User.findOne({email:email}).populate("roles","role")
-      const {roles}=user
+    
       if (!user) {
         return next(CreateError(400,"ID not found"))
       }
+          const {roles}=user;
       const isPasswordValid = await bcrypt.compare(password,user.password);
       if (!isPasswordValid) {
         return next(CreateError(400,"Password Not Found"))
