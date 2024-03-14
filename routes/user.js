@@ -1,9 +1,11 @@
 import express from 'express';
-import { getAllUser, getById } from '../controllers/user.controller.js';
+import { getAllUser, getAllUserById } from '../controllers/user.controller.js';
+import { verifyAdmin, verifyUser } from '../utilis/verifytoken.js';
+
 
 const router = express.Router();
 
-router.get('/',getAllUser);
-router.get('/:id',getById);
+router.get('/',verifyAdmin,getAllUser);
+router.get('/:id',verifyUser,getAllUserById);
 
 export default router

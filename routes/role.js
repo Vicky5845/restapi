@@ -8,4 +8,4 @@ router.put('/update/:id',updateRole);
 router.delete('/delete/:id',deleteRole);
 router.get('/all',getAll);
 
-export default router;
+export default router

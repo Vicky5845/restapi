@@ -1,20 +1,22 @@
 import User from "../models/User.js";
+import { CreateError, CreateSucess } from "../utilis/hander.js";
 
-export const getAllUser = async(req,res)=>{
+export const getAllUser = async(req,res,next)=>{
     try {
-        const getAll = await User.find({})
-        return res.send(getAll)
+        const allUser = await User.find({});
+        return next(CreateSucess(200,"All User",allUser))
     } catch (error) {
-        return res.send("ISE")
+        return next(CreateError(400,"ISE"))
     }
 }
 
-export const getById = async(req,res)=>{
+export const getAllUserById = async(req,res,next)=>{
     try {
-        const getID = req.params.id;
-        const byID = await User.findById({_id:getID})
-        return res.send(byID)
+        const userID = req.params.id;
+        const userById = await User.findById({_id:userID})
+        return next(CreateSucess(200,"By ID",userById))
     } catch (error) {
-        return res.send("ISE")
+        return next(CreateError(400,"ISE"))
     }
 }
+
