@@ -40,6 +40,24 @@ export const registerAdmin = async (req, res, next) => {
     }
 }
 
+export const forgotPassword = async (req, res, next) => {
+    try {
+        const { password } = req.body
+        const userID = req.params.id;
+        const updatePassword = await User.findById({ _id: userID });
+        if (updatePassword) {
+            const salt = await bcrypt.genSalt(10);
+            const hashPassword = await bcrypt.hash(password, salt);
+            const newPassword = await User.findByIdAndUpdate(userID, { password: hashPassword }, { new: true })
+            return next(CreateSucess(200, "Password Changed Sucessfully"))
+        } else {
+            return next(CreateError(400, "Password Changed  Failed"))
+        }
+    } catch (error) {
+        return next(CreateError(400, "ISE"))
+    }
+}
+
 export const login = async (req, res, next) => {
   try {
       const { email, password } = req.body;
